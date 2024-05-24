@@ -1,4 +1,4 @@
-TODO_plugin_name:
-  plugin_name_enabled:
+snapblocks_discourse:
+  snapblocks_enabled:
     default: false
     client: true

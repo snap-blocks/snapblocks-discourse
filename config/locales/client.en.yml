@@ -3,7 +3,8 @@ en:
     admin:
       site_settings:
         categories:
-          TODO_plugin_name: "Plugin Name"
+          snapblocks_discourse: "Snapblocks"
   js:
-    discourse_plugin_name:
-      placeholder: placeholder
+    snapblocks_discourse:
+      title: Snapblocks
+      label: Display snap blocks with text.

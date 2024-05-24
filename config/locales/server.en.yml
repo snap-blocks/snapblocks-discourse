@@ -1,1 +1,5 @@
 en:
+  site_settings:
+    snapblocks_enabled: 'Enable the snapblocks plugin. If you change this, you must rebake all posts with: "rake posts:rebake".'
+  snapblocks_discourse:
+    snapblocks_spoiler: "snapblocks"
