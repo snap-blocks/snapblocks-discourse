@@ -4,7 +4,7 @@
 
 For more information, please see: **url to meta topic** - TO BE MADE
 
-[Snapblocks](https://snap-blocks.github.io/) is a library that is able to convert text into [Snap<i>!</i>](https://snap.berkeley.edu/) block images. This Discourse plugin allows users to use snapblocks on a Discourse forum, most notably, the [Snap<i>!</i> Forum](https://forum.snap.berkeley.edu/).
+[Snapblocks](https://snap-blocks.github.io/) is a library that is able to convert text into [Snap<i>!</i>](https://snap.berkeley.edu/) block images. This Discourse plugin allows users to use snapblocks on a Discourse forum, mainly for the [Snap<i>!</i> Forum](https://forum.snap.berkeley.edu/).
 
 ## Usage
 
@@ -16,7 +16,7 @@ move (10) steps
 [/snapblocks]
 ```
 
-You can alternatively use `[scratchblocks][/scratchblocks]` for compatability purposes (snapblocks is a fork of [scratchblocks](https://scratchblocks.github.io/), and there was an old Discourse plugin on the Snap<i>!</i> forum that allowed users to type scratchblocks inside `[scratchblocks][/scratchblocks]` tags).
+You can alternatively use `[scratchblocks][/scratchblocks]` for compatibility purposes (snapblocks is a fork of [scratchblocks](https://scratchblocks.github.io/), and there was an old Discourse plugin on the Snap<i>!</i> forum that allowed users to type scratchblocks inside `[scratchblocks][/scratchblocks]` tags).
 
 You can also use `[sb][/sb]` to add snapblocks code inline.
 
@@ -29,18 +29,18 @@ Use the [sb]move (10) steps[/sb] block to move forward.
 There are a few settings available to change how snapblocks are rendered.
 
 - Block Style
+- Block Scale
 - Zebra Coloring
 - Block Wrap
-- Block Wrap Size - Discouraged to change
 - Show Spaces
 
-All these settings can also be enabled in snapblocks snippets.
+Many options can also be used in snapblocks snippets.
 
 ```
-[snapblocks blockStyle="snap-flat" wrap="true" wrapSize="200" zebra="true" showSpaces="false"]
+[snapblocks blockStyle="snap-flat" wrap="true" wrapSize=100 zebra="true" showSpaces="false"]
 if <[] = []> {
   forever {
-    run ({} @addInput) @verticalEllipsis @addInput
+    run ({} @addInput) with inputs [Hello world] @delInput @verticalEllipsis @addInput
   }
 }
 [/snapblocks]
