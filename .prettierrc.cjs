@@ -1,3 +1,1 @@
-module.exports = {
-    ...require("@discourse/lint-configs/prettier"),
-};
+module.exports = require("@discourse/lint-configs/prettier");
