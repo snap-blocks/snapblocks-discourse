@@ -1,5 +1,4 @@
-const discourseConfig = require("@discourse/lint-configs/eslint")
 module.exports = {
-    ...discourseConfig,
+    ...require("@discourse/lint-configs/eslint"),
     ignorePatterns: ["./assets/javascripts/lib/snapblocks/*"],
-}
+};
