@@ -8,3 +8,5 @@
 # url: https://github.com/snap-blocks/snapblocks-discourse
 
 enabled_site_setting :snapblocks_enabled
+
+register_asset "stylesheets/snapblocks-discourse.css"
