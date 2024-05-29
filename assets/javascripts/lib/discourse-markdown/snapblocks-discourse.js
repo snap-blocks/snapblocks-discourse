@@ -28,10 +28,6 @@ function replaceSnapblocks(inline, state, tagInfo, content) {
   html += `${escaped}</${inline ? "span" : "pre"}>`;
 
   token.content = html;
-  console.log("content", token.content);
-
-  console.log("state", state);
-  console.log("token", token);
   return true;
 }
 
