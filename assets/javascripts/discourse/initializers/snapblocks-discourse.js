@@ -1,5 +1,6 @@
 import { withPluginApi } from "discourse/lib/plugin-api";
 import snapblocks from "discourse/plugins/snapblocks-discourse/lib/snapblocks/snapblocks.min.es";
+import loadTranslations from "discourse/plugins/snapblocks-discourse/lib/snapblocks/translations-all-es";
 
 function applySnapblocks(element, siteSettings) {
   async function renderElement(el) {
@@ -46,8 +47,11 @@ export default {
     const siteSettings = container.lookup("service:site-settings");
     // console.debug(`snapblocks version: ${snapblocks.version}`);
 
-    withPluginApi("1.15.0", (api) => {
-      return initializeSnapblocks(api, siteSettings);
-    });
+    if (siteSettings.snapblocks_enabled) {
+      loadTranslations(snapblocks);
+      withPluginApi("1.15.0", (api) => {
+        return initializeSnapblocks(api, siteSettings);
+      });
+    }
   },
 };
