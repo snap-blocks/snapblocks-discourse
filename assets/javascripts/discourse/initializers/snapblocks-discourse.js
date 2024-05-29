@@ -1,5 +1,5 @@
-import snapblocks from "discourse/plugins/snapblocks-discourse/lib/snapblocks/snapblocks.min.es";
 import { withPluginApi } from "discourse/lib/plugin-api";
+import snapblocks from "discourse/plugins/snapblocks-discourse/lib/snapblocks/snapblocks.min.es";
 
 function applySnapblocks(element, siteSettings) {
   async function renderElement(el) {
@@ -40,7 +40,7 @@ export default {
   name: "apply-snapblocks",
   initialize(container) {
     const siteSettings = container.lookup("service:site-settings");
-    console.debug(`snapblocks version: ${snapblocks.version}`);
+    // console.debug(`snapblocks version: ${snapblocks.version}`);
 
     withPluginApi("1.15.0", (api) => {
       return initializeSnapblocks(api, siteSettings);

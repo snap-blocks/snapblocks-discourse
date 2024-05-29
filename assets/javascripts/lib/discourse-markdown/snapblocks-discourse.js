@@ -7,8 +7,8 @@ function replaceSnapblocks(inline, state, tagInfo, content) {
     showSpaces: tagInfo.attrs.showSpaces,
     inline,
   };
+  
   let token = state.push("html_raw", "", 0);
-  // token.tag = "snapblocks"
   token.attrs = [
     ["class", "snapblocks-blocks"],
     ["data-blockStyle", options.blockStyle],
