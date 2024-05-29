@@ -5,7 +5,7 @@ function replaceSnapblocks(inline, state, tagInfo, content) {
     wrapSize: tagInfo.attrs.wrapSize,
     zebra: tagInfo.attrs.zebra,
     showSpaces: tagInfo.attrs.showSpaces,
-    inline: inline,
+    inline,
   };
   let token = state.push("html_raw", "", 0);
   // token.tag = "snapblocks"

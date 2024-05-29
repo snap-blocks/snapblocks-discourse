@@ -2,8 +2,8 @@ import snapblocks from "discourse/plugins/snapblocks-discourse/lib/snapblocks/sn
 import { withPluginApi } from "discourse/lib/plugin-api";
 
 function applySnapblocks(element, siteSettings) {
-  async function renderElement(element) {
-    snapblocks.renderElement(element, {
+  async function renderElement(el) {
+    snapblocks.renderElement(el, {
       style: siteSettings.block_style,
       zebra: siteSettings.zebra_coloring,
       wrap: siteSettings.block_wrap,
