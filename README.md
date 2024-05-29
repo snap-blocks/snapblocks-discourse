@@ -1,8 +1,6 @@
 # **Snapblocks** Discourse Plugin
 
-**Please note: this plugin is currently being developed, pretty much none of the features are implemented yet. The information here is mainly just to show what this plugin will be able to do.**
-
-For more information, please see: **url to meta topic** - TO BE MADE
+For more information, please see: **PENDING**
 
 [Snapblocks](https://snap-blocks.github.io/) is a library that is able to convert text into [Snap<i>!</i>](https://snap.berkeley.edu/) block images. This Discourse plugin allows users to use snapblocks on a Discourse forum, mainly for the [Snap<i>!</i> Forum](https://forum.snap.berkeley.edu/).
 
