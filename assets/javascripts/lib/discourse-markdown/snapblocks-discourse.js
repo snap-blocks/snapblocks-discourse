@@ -7,14 +7,14 @@ function replaceSnapblocks(inline, state, tagInfo, content) {
     showSpaces: tagInfo.attrs.showSpaces,
     inline,
   };
-  
+
   let token = state.push("html_raw", "", 0);
   token.attrs = [
     ["class", "snapblocks-blocks"],
     ["data-blockStyle", options.blockStyle],
   ];
 
-  let html = `<${inline ? "span" : "pre"} class="snapblocks-blocks"`;
+  let html = `<${inline ? "code" : "pre"} class="snapblocks-blocks"`;
 
   for (const [key, value] of Object.entries(options)) {
     if (value != null) {
@@ -25,7 +25,7 @@ function replaceSnapblocks(inline, state, tagInfo, content) {
   html += ">";
 
   const escaped = state.md.utils.escapeHtml(content);
-  html += `${escaped}</${inline ? "span" : "pre"}>`;
+  html += `${escaped}</${inline ? "code" : "pre"}>`;
 
   token.content = html;
   return true;
