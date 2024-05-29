@@ -3,11 +3,15 @@ import snapblocks from "discourse/plugins/snapblocks-discourse/lib/snapblocks/sn
 
 function applySnapblocks(element, siteSettings) {
   async function renderElement(el) {
+    let style = el.getAttribute("blockStyle") || siteSettings.block_style;
     snapblocks.renderElement(el, {
       style: siteSettings.block_style,
       zebra: siteSettings.zebra_coloring,
       wrap: siteSettings.block_wrap,
       showSpaces: siteSettings.show_spaces,
+      scale: style.startsWith("scratch3")
+        ? siteSettings.block_scale * 0.675
+        : siteSettings.block_scale,
       elementOptions: true,
     });
   }

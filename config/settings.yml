@@ -12,6 +12,11 @@ snapblocks_discourse:
       - scratch2
       - scratch3
       - scratch3-hc
+  block_scale:
+    client: true
+    type: float
+    default: 1
+    min: 0.1
   zebra_coloring:
     client: true
     default: true
