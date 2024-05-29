@@ -2,14 +2,18 @@ import snapblocks from "discourse/plugins/snapblocks-discourse/lib/snapblocks/sn
 import { withPluginApi } from "discourse/lib/plugin-api";
 
 function applySnapblocks(element, siteSettings) {
-  element.querySelectorAll(".snapblocks-blocks").forEach((sb) => {
-    snapblocks.renderElement(sb, {
+  async function renderElement(element) {
+    snapblocks.renderElement(element, {
       style: siteSettings.block_style,
       zebra: siteSettings.zebra_coloring,
       wrap: siteSettings.block_wrap,
       showSpaces: siteSettings.show_spaces,
       elementOptions: true,
     });
+  }
+
+  element.querySelectorAll(".snapblocks-blocks").forEach((sb) => {
+    renderElement(sb);
   });
 }
 
@@ -36,7 +40,7 @@ export default {
   name: "apply-snapblocks",
   initialize(container) {
     const siteSettings = container.lookup("service:site-settings");
-    console.log(`snapblocks version: ${snapblocks.version}`);
+    console.debug(`snapblocks version: ${snapblocks.version}`);
 
     withPluginApi("1.15.0", (api) => {
       return initializeSnapblocks(api, siteSettings);
