@@ -1,4 +1,4 @@
-import snapblocks from 'discourse/plugins/snapblocks-discourse/lib/snapblocks/snapblocks.min.es'
+import snapblocks from "discourse/plugins/snapblocks-discourse/lib/snapblocks/snapblocks.min.es";
 import { withPluginApi } from "discourse/lib/plugin-api";
 
 function applySnapblocks(element, siteSettings) {
@@ -9,7 +9,7 @@ function applySnapblocks(element, siteSettings) {
       wrap: siteSettings.block_wrap,
       showSpaces: siteSettings.show_spaces,
       elementOptions: true,
-    })
+    });
   });
 }
 
@@ -33,13 +33,13 @@ function initializeSnapblocks(api, siteSettings) {
 }
 
 export default {
-    name: 'apply-snapblocks',
-    initialize(container) {
-      const siteSettings = container.lookup("service:site-settings");
-      console.log(`snapblocks version: ${snapblocks.version}`);
+  name: "apply-snapblocks",
+  initialize(container) {
+    const siteSettings = container.lookup("service:site-settings");
+    console.log(`snapblocks version: ${snapblocks.version}`);
 
-      withPluginApi("1.15.0", (api) => {
-        return initializeSnapblocks(api, siteSettings)
-      });
-    }
+    withPluginApi("1.15.0", (api) => {
+      return initializeSnapblocks(api, siteSettings);
+    });
+  },
 };
