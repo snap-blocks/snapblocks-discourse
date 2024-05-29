@@ -1,5 +1,9 @@
 en:
   site_settings:
     snapblocks_enabled: 'Enable the snapblocks plugin. If you change this, you must rebake all posts with: "rake posts:rebake".'
+    block_style: "The default block style"
+    zebra_coloring: "Enable zebra coloring"
+    block_wrap: "Wrap long blocks"
+    show_spaces: "Show spaces in inputs"
   snapblocks_discourse:
     snapblocks_spoiler: "snapblocks"

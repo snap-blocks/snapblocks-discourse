@@ -2,3 +2,22 @@ snapblocks_discourse:
   snapblocks_enabled:
     default: false
     client: true
+  block_style:
+    client: true
+    default: "snap"
+    type: enum
+    choices:
+      - snap
+      - snap-flat
+      - scratch2
+      - scratch3
+      - scratch3-hc
+  zebra_coloring:
+    client: true
+    default: true
+  block_wrap:
+    client: true
+    default: true
+  show_spaces:
+    client: true
+    default: true

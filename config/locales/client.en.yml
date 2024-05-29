@@ -4,6 +4,7 @@ en:
       site_settings:
         categories:
           snapblocks_discourse: "Snapblocks"
+
   js:
     snapblocks_discourse:
       title: Snapblocks

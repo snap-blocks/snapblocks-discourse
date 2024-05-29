@@ -8,15 +8,3 @@
 # url: https://github.com/snap-blocks/snapblocks-discourse
 
 enabled_site_setting :snapblocks_enabled
-
-after_initialize do
-  on(:reduce_cooked) do |fragment, post|
-    fragment
-      .css(".snapblocks-blocks")
-      .each do |el|
-        link = fragment.document.create_element("code")
-        link.content = "snapblocks"
-        el.inner_html = link.to_html
-      end
-  end
-end
