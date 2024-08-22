@@ -9,3 +9,5 @@ en:
     snapblocks_discourse:
       title: Snapblocks
       label: Display snap blocks with text.
+    composer:
+      snapblocks_text: snapblocks text
