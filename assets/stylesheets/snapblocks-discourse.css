@@ -6,4 +6,5 @@ code.snapblocks-blocks:has(.snapblocks) {
     overflow: auto;
     max-width: 100%;
     max-height: 500px;
+    vertical-align: middle;
 }
