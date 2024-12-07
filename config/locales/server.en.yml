@@ -6,6 +6,6 @@ en:
     block_wrap: "Wrap long blocks"
     show_spaces: "Show spaces in inputs"
     block_scale: "Scale to render blocks"
-    enable_scratchblocks: "Enable [scratchblocks] alias"
+    scratchblocks_alias: "Enable [scratchblocks] alias"
   snapblocks_discourse:
     snapblocks_spoiler: "snapblocks"

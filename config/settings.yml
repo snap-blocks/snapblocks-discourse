@@ -26,6 +26,6 @@ snapblocks_discourse:
   show_spaces:
     client: true
     default: true
-  enable_scratchblocks:
+  scratchblocks_alias:
     client: true
     default: true

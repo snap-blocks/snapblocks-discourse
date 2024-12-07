@@ -47,11 +47,11 @@ export function setup(helper) {
     "pre.snapblocks-blocks[showSpaces]",
   ]);
 
-  var registerScratchblocks
-  
+  var registerScratchblocks;
+
   helper.registerOptions((opts, siteSettings) => {
     opts.features["snapblocks"] = !!siteSettings.snapblocks_enabled;
-    registerScratchblocks = !!siteSettings.enable_scratchblocks
+    registerScratchblocks = !!siteSettings.scratchblocks_alias;
   });
 
   helper.registerPlugin((md) => {
