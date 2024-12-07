@@ -47,6 +47,13 @@ export function setup(helper) {
     "pre.snapblocks-blocks[showSpaces]",
   ]);
 
+  var registerScratchblocks
+  
+  helper.registerOptions((opts, siteSettings) => {
+    opts.features["snapblocks"] = !!siteSettings.snapblocks_enabled;
+    registerScratchblocks = !!siteSettings.enable_scratchblocks
+  });
+
   helper.registerPlugin((md) => {
     md.block.bbcode.ruler.push("snapblocks", {
       tag: "snapblocks",
@@ -54,12 +61,16 @@ export function setup(helper) {
         return replaceSnapblocks(false, state, tagInfo, content);
       },
     });
-    md.block.bbcode.ruler.push("scratchblocks", {
-      tag: "scratchblocks",
-      replace(state, tagInfo, content) {
-        return replaceSnapblocks(false, state, tagInfo, content);
-      },
-    });
+
+    if (registerScratchblocks) {
+      md.block.bbcode.ruler.push("scratchblocks", {
+        tag: "scratchblocks",
+        replace(state, tagInfo, content) {
+          return replaceSnapblocks(false, state, tagInfo, content);
+        },
+      });
+    }
+
     md.inline.bbcode.ruler.push("sb", {
       tag: "sb",
       replace(state, tagInfo, content) {
