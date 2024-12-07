@@ -47,7 +47,7 @@ export function setup(helper) {
     "pre.snapblocks-blocks[showSpaces]",
   ]);
 
-  var registerScratchblocks;
+  let registerScratchblocks;
 
   helper.registerOptions((opts, siteSettings) => {
     opts.features["snapblocks"] = !!siteSettings.snapblocks_enabled;
