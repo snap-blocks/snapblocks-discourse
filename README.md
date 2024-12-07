@@ -14,7 +14,7 @@ move (10) steps
 [/snapblocks]
 ```
 
-You can alternatively use `[scratchblocks][/scratchblocks]` for compatibility purposes (snapblocks is a fork of [scratchblocks](https://scratchblocks.github.io/), and there was an old Discourse plugin on the Snap<i>!</i> forum that allowed users to type scratchblocks inside `[scratchblocks][/scratchblocks]` tags).
+You can alternatively use `[scratchblocks][/scratchblocks]`, though this can be disabled.
 
 You can also use `[sb][/sb]` to add snapblocks code inline.
 
