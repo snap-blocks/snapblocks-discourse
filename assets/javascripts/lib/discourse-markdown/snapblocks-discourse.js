@@ -5,6 +5,7 @@ function replaceSnapblocks(inline, state, tagInfo, content) {
     wrapSize: tagInfo.attrs.wrapSize,
     zebra: tagInfo.attrs.zebra,
     showSpaces: tagInfo.attrs.showSpaces,
+    santa: tagInfo.attrs.santa,
     inline,
   };
 
@@ -39,12 +40,14 @@ export function setup(helper) {
     "span.snapblocks-blocks[wrapSize]",
     "span.snapblocks-blocks[zebra]",
     "span.snapblocks-blocks[showSpaces]",
+    "span.snapblocks-blocks[santa]",
     "pre.snapblocks-blocks",
     "pre.snapblocks-blocks[blockStyle]",
     "pre.snapblocks-blocks[wrap]",
     "pre.snapblocks-blocks[wrapSize]",
     "pre.snapblocks-blocks[zebra]",
     "pre.snapblocks-blocks[showSpaces]",
+    "pre.snapblocks-blocks[santa]",
   ]);
 
   let registerScratchblocks;

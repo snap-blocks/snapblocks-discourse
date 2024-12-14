@@ -7,5 +7,6 @@ en:
     show_spaces: "Show spaces in inputs"
     block_scale: "Scale to render blocks"
     scratchblocks_alias: "Enable [scratchblocks] alias"
+    santa_hats: "Enable holiday Santa Hats"
   snapblocks_discourse:
     snapblocks_spoiler: "snapblocks"

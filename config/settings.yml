@@ -26,6 +26,9 @@ snapblocks_discourse:
   show_spaces:
     client: true
     default: true
+  santa_hats:
+    client: true
+    default: false
   scratchblocks_alias:
     client: true
     default: true

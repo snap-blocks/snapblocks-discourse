@@ -31,11 +31,13 @@ There are a few settings available to change how snapblocks are rendered.
 - Zebra Coloring
 - Block Wrap
 - Show Spaces
+- Santa Hats
 
 Many options can also be used in snapblocks snippets.
 
 ```
-[snapblocks blockStyle="snap-flat" wrap="true" wrapSize=100 zebra="true" showSpaces="false"]
+[snapblocks blockStyle="snap-flat" wrap="true" wrapSize=100 zebra="true" showSpaces="false" santa="true"]
+when flag clicked
 if <[] = []> {
   forever {
     run ({} @addInput) with inputs [Hello world] @delInput @verticalEllipsis @addInput
@@ -46,7 +48,7 @@ if <[] = []> {
 
 You can also set the block style using the default parameter.
 
-```markdown
+```
 [snapblocks="snap-flat"]
 move (10) steps
 [/snapblocks]

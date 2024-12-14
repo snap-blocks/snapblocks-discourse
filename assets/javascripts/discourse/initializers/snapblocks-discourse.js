@@ -10,6 +10,7 @@ function applySnapblocks(element, siteSettings) {
       zebra: siteSettings.zebra_coloring,
       wrap: siteSettings.block_wrap,
       showSpaces: siteSettings.show_spaces,
+      santa: siteSettings.santa_hats,
       scale: style.startsWith("scratch3")
         ? siteSettings.block_scale * 0.675
         : siteSettings.block_scale,
