@@ -3,7 +3,7 @@
 # name: snapblocks-discourse
 # about: Snapblocks plugin for discourse
 # meta_topic_id: 310155
-# version: 1.2.0
+# version: 1.3.0
 # authors: ego-lay-atman-bay
 # url: https://github.com/snap-blocks/snapblocks-discourse
 
