@@ -1,5 +1,9 @@
 import { withPluginApi } from "discourse/lib/plugin-api";
 import snapblocks from "discourse/plugins/snapblocks-discourse/lib/snapblocks/snapblocks.min.es";
+import {
+  addBlockDecorateCallback,
+  addTagDecorateCallback,
+} from "discourse/lib/to-markdown";
 import loadTranslations from "discourse/plugins/snapblocks-discourse/lib/snapblocks/translations-all-es";
 
 function applySnapblocks(element, siteSettings) {
@@ -39,6 +43,61 @@ function initializeSnapblocks(api, siteSettings) {
     },
     icon: "code",
     label: "snapblocks_discourse.title",
+  });
+
+  addTagDecorateCallback(function () {
+    const { attributes } = this.element;
+
+    if (attributes["snapblocks-source"]) {
+      let prefix = "[sb";
+
+      const attrs = [
+        "blockstyle",
+        "wrap",
+        "wrapsize",
+        "zebra",
+        "showspaces",
+        "santa",
+      ];
+      for (const attr of attrs) {
+        if (attributes[attr]) {
+          prefix += ` ${attr}=${attributes[attr]}`;
+        }
+      }
+
+      prefix += "]";
+
+      this.prefix = prefix;
+      this.suffix = "[/sb]";
+      return attributes["snapblocks-source"];
+    }
+  });
+  addBlockDecorateCallback(function () {
+    const { attributes } = this.element;
+
+    if (attributes["snapblocks-source"]) {
+      let prefix = "[snapblocks";
+
+      const attrs = [
+        "blockstyle",
+        "wrap",
+        "wrapsize",
+        "zebra",
+        "showspaces",
+        "santa",
+      ];
+      for (const attr of attrs) {
+        if (attributes[attr]) {
+          prefix += ` ${attr}=${attributes[attr]}`;
+        }
+      }
+
+      prefix += "]";
+
+      this.prefix = prefix;
+      this.suffix = "[/snapblocks]";
+      return `\n${attributes["snapblocks-source"]}\n`;
+    }
   });
 }
 

@@ -15,7 +15,7 @@ function replaceSnapblocks(inline, state, tagInfo, content) {
     ["data-blockStyle", options.blockStyle],
   ];
 
-  let html = `<${inline ? "code" : "pre"} class="snapblocks-blocks"`;
+  let html = `<${inline ? "span" : "pre"} class="snapblocks-blocks"`;
 
   for (const [key, value] of Object.entries(options)) {
     if (value != null) {
@@ -23,17 +23,24 @@ function replaceSnapblocks(inline, state, tagInfo, content) {
     }
   }
 
+  const escaped = state.md.utils.escapeHtml(content);
+  html += ` snapblocks-source="${escaped}"`;
   html += ">";
 
-  const escaped = state.md.utils.escapeHtml(content);
-  html += `${escaped}</${inline ? "code" : "pre"}>`;
+  html += `${escaped}</${inline ? "span" : "pre"}>`;
 
   token.content = html;
   return true;
+  html = `<${
+    inline ? "span" : "div"
+  } class="snapblocks-container">${html}<span class="snapblocks-source">${escaped}</span></${
+    inline ? "span" : "div"
+  }>`;
 }
 
 export function setup(helper) {
   helper.allowList([
+    "span.snapblocks-source",
     "span.snapblocks-blocks",
     "span.snapblocks-blocks[blockStyle]",
     "span.snapblocks-blocks[wrap]",
@@ -41,6 +48,7 @@ export function setup(helper) {
     "span.snapblocks-blocks[zebra]",
     "span.snapblocks-blocks[showSpaces]",
     "span.snapblocks-blocks[santa]",
+    "span.snapblocks-blocks[snapblocks-source]",
     "pre.snapblocks-blocks",
     "pre.snapblocks-blocks[blockStyle]",
     "pre.snapblocks-blocks[wrap]",
@@ -48,6 +56,7 @@ export function setup(helper) {
     "pre.snapblocks-blocks[zebra]",
     "pre.snapblocks-blocks[showSpaces]",
     "pre.snapblocks-blocks[santa]",
+    "pre.snapblocks-blocks[snapblocks-source]",
   ]);
 
   let registerScratchblocks;
