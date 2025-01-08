@@ -24,7 +24,8 @@ function replaceSnapblocks(inline, state, tagInfo, content) {
   }
 
   const escaped = state.md.utils.escapeHtml(content);
-  html += ` snapblocks-source="${escaped}"`;
+  const source = escaped;
+  html += ` snapblocks-source="${source}"`;
   html += ">";
 
   html += `${escaped}</${inline ? "span" : "pre"}>`;
