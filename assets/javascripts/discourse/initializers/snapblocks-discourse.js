@@ -25,8 +25,11 @@ function applySnapblocks(element, siteSettings) {
 
   element.querySelectorAll(".snapblocks-blocks").forEach((sb) => {
     renderElement(sb);
-    if (sb.getAttribute('snapblocks-source')) {
-      sb.setAttribute('snapblocks-source', sb.getAttribute('snapblocks-source').replaceAll('\n', '&NewLine;'));
+    if (sb.getAttribute("snapblocks-source")) {
+      sb.setAttribute(
+        "snapblocks-source",
+        sb.getAttribute("snapblocks-source").replaceAll("\n", "&NewLine;")
+      );
     }
   });
 }
@@ -73,11 +76,10 @@ function initializeSnapblocks(api, siteSettings) {
 
       this.prefix = prefix;
       this.suffix = "[/sb]";
-      return attributes["snapblocks-source"].replaceAll('&NewLine;', '\n');
+      return attributes["snapblocks-source"].replaceAll("&NewLine;", "\n");
     }
   });
   addBlockDecorateCallback(function () {
-
     const { attributes } = this.element;
 
     if (attributes["snapblocks-source"]) {
@@ -101,7 +103,10 @@ function initializeSnapblocks(api, siteSettings) {
 
       this.prefix = prefix;
       this.suffix = "[/snapblocks]";
-      return `\n${attributes["snapblocks-source"].replaceAll('&NewLine;', '\n')}\n`;
+      return `\n${attributes["snapblocks-source"].replaceAll(
+        "&NewLine;",
+        "\n"
+      )}\n`;
     }
   });
 }
