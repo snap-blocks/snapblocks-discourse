@@ -31,11 +31,6 @@ function replaceSnapblocks(inline, state, tagInfo, content) {
 
   token.content = html;
   return true;
-  html = `<${
-    inline ? "span" : "div"
-  } class="snapblocks-container">${html}<span class="snapblocks-source">${escaped}</span></${
-    inline ? "span" : "div"
-  }>`;
 }
 
 export function setup(helper) {
