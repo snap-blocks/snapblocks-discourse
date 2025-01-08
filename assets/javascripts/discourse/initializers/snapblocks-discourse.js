@@ -19,6 +19,7 @@ function applySnapblocks(element, siteSettings) {
         ? siteSettings.block_scale * 0.675
         : siteSettings.block_scale,
       elementOptions: true,
+      languages: Object.keys(snapblocks.allLanguages),
     });
   }
 
