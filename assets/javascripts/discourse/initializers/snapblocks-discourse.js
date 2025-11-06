@@ -5,6 +5,7 @@ import {
 } from "discourse/lib/to-markdown";
 import snapblocks from "discourse/plugins/snapblocks-discourse/lib/snapblocks/snapblocks.min.es";
 import loadTranslations from "discourse/plugins/snapblocks-discourse/lib/snapblocks/translations-all-es";
+import richEditorExtension from '../../lib/rich-editor-extension';
 
 function applySnapblocks(element, siteSettings) {
   async function renderElement(el) {
@@ -41,12 +42,18 @@ function initializeSnapblocks(api, siteSettings) {
 
   api.addComposerToolbarPopupMenuOption({
     action: function (toolbarEvent) {
-      toolbarEvent.applySurround(
-        "\n" + `[snapblocks]` + "\n",
-        "\n[/snapblocks]\n",
-        "snapblocks_text",
-        { multiline: false }
-      );
+       if (toolbarEvent.commands) {
+        toolbarEvent.commands.toggleSnapblocks();
+      } else {
+        toolbarEvent.applySurround(
+          "\n[snapblocks]\n",
+          "\n[/snapblocks]\n",
+          "snapblocks_text",
+          {
+            multiline: false,
+          }
+        );
+      }
     },
     icon: "code",
     label: "snapblocks_discourse.title",
@@ -109,7 +116,10 @@ function initializeSnapblocks(api, siteSettings) {
       )}\n`;
     }
   });
+  
+  api.registerRichEditorExtension(richEditorExtension)
 }
+
 
 export default {
   name: "apply-snapblocks",
