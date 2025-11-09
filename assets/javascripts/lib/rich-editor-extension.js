@@ -6,53 +6,63 @@ const SNAPBLOCKS_NODES = ["inline_snapblocks", "snapblocks"];
 const extension = {
   nodeSpec: {
     snapblocks: {
-      attrs: {
-        rendered: { default: true },
-        'snapblocks-source': {default: ''},
-        inline: {default: false},
-      },
+      attrs: { rendered: { default: true } },
+      code: true,
       group: "block",
-      content: "block+",
+      content: "text*",
       createGapCursor: true,
-      parseDOM: [{
-        tag: `div.snapblocks-blocks`,
-        getContent(node, schema) {
-            console.log('snapblocks node', node, schema)
-            return node.getAttribute('snapblocks-source')
-        }
-      }],
+      parseDOM: [{ tag: "pre.snapblocks-blocks" }],
       toDOM: () => ["pre", { class: "snapblocks-blocks" }, 0],
     },
     inline_snapblocks: {
       attrs: { rendered: { default: true } },
       group: "inline",
       inline: true,
-      content: "inline*",
+      content: "inline+",
       parseDOM: [{ tag: "span.snapblocks-blocks" }],
       toDOM: () => ["span", { class: "snapblocks-blocks" }, 0],
     },
   },
   parse: {
-    bbcode_snapblocks(state, token) {
-      console.log('snapblocks', state, token)
-      return true
-    },
-    wrap_bbcode(state, token) {
-      console.log('snapblocks', state, token)
-      if (token.nesting === 1 && token.attrGet("class") === "snapblocks-blocks") {
-        state.openNode(state.schema.nodes.snapblocks);
-        return true;
-      } else if (token.nesting === -1 && state.top().type.name === "snapblocks-blocks") {
-        state.closeNode();
+    // snapblocks_open(state, token) {
+    //   return state.openNode(state.schema.nodes.snapblocks)
+    // },
+    // snapblocks_close(state, token) {
+    //   return state.closeNode()
+    // },
+    // bbcode_snapblocks: { block: 'snapblocks' },
+    // bbcode(state, token) {
+    //   console.log('snapblocks', state, token)
+    //   if (token.nesting === 1 && token.attrGet("class") === "snapblocks-blocks") {
+    //     state.openNode(state.schema.nodes.snapblocks);
+    //     return true;
+    //   } else if (token.nesting === -1 && state.top().type.name === "snapblocks-blocks") {
+    //     state.closeNode();
+    //     return true;
+    //   }
+    // },
+    bbcode_open(state, token) {
+      console.log('snapblocks open', token)
+      if (token.attrGet('class') === 'snapblocks-blocks') {
+        state.openNode(state.schema.nodes.snapblocks, {
+          open: token.attrGet("open") !== null,
+        });
         return true;
       }
     },
+    bbcode_close(state, token) {
+      console.log('snapblocks close', token)
+      if (token.attrGet('class') === 'snapblocks-blocks') {
+        state.closeNode();
+        return true;
+      }
+    }
   },
   serializeNode: {
     snapblocks(state, node) {
       state.write("[snapblocks]\n");
       state.renderContent(node);
-      state.write("[/snapblocks]\n\n");
+      state.write("\n[/snapblocks]\n\n");
     },
     inline_snapblocks(state, node) {
       state.write("[sb]");

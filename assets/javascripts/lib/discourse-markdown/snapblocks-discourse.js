@@ -9,28 +9,47 @@ function replaceSnapblocks(inline, state, tagInfo, content) {
     inline,
   };
 
-  let token = state.push("html_raw", "", 0);
+  console.log('state', state)
+
+  let token = state.push('bbcode_open', 'pre', 1)
+  token.attrs = [
+    ['class', 'snapblocks-blocks']
+  ]
+  token = state.push('text', '', 0)
+  // token.content = state.md.utils.escapeHtml(content);
+  token.content = content
+  token = state.push('bbcode_close', 'pre', -1)
+  token.attrs = [
+    ['class', 'snapblocks-blocks']
+  ]
+
+  return true
+  
+  // let token = state.push("html_raw", "", 0);
   token.attrs = [
     ["class", "snapblocks-blocks"],
     ["data-blockStyle", options.blockStyle],
   ];
 
-  let html = `<${inline ? "span" : "pre"} class="snapblocks-blocks"`;
+  // let html = `<${inline ? "span" : "pre"} class="snapblocks-blocks"`;
+  let html = `<${inline ? "span" : "div"} class="spoiled"`;
 
-  for (const [key, value] of Object.entries(options)) {
-    if (value != null) {
-      html += ` ${key}="${value}"`;
-    }
-  }
+  // for (const [key, value] of Object.entries(options)) {
+  //   if (value != null) {
+  //     html += ` ${key}="${value}"`;
+  //   }
+  // }
 
   const escaped = state.md.utils.escapeHtml(content);
   const source = escaped;
-  html += ` snapblocks-source="${source}"`;
+  // html += ` snapblocks-source="${source}"`;
   html += ">";
 
-  html += `${escaped}</${inline ? "span" : "pre"}>`;
+  html += `${escaped}</${inline ? "span" : "div"}>`;
 
   token.content = html;
+
+  console.log('rendered snapblocks', token.content)
   return true;
 }
 
@@ -53,6 +72,14 @@ export function setup(helper) {
     "pre.snapblocks-blocks[showSpaces]",
     "pre.snapblocks-blocks[santa]",
     "pre.snapblocks-blocks[snapblocks-source]",
+    "div.snapblocks-blocks",
+    "div.snapblocks-blocks[blockStyle]",
+    "div.snapblocks-blocks[wrap]",
+    "div.snapblocks-blocks[wrapSize]",
+    "div.snapblocks-blocks[zebra]",
+    "div.snapblocks-blocks[showSpaces]",
+    "div.snapblocks-blocks[santa]",
+    "div.snapblocks-blocks[snapblocks-source]",
   ]);
 
   let registerScratchblocks;
@@ -85,5 +112,7 @@ export function setup(helper) {
         return replaceSnapblocks(true, state, tagInfo, content);
       },
     });
+
+    // console.log('rulser', md.block.bbcode.ruler)
   });
 }

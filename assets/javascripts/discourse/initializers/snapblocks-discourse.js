@@ -8,6 +8,7 @@ import loadTranslations from "discourse/plugins/snapblocks-discourse/lib/snapblo
 import richEditorExtension from '../../lib/rich-editor-extension';
 
 function applySnapblocks(element, siteSettings) {
+  return
   async function renderElement(el) {
     let style = el.getAttribute("blockStyle") || siteSettings.block_style;
     snapblocks.renderElement(el, {
