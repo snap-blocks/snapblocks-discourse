@@ -9,77 +9,34 @@ function replaceSnapblocks(inline, state, tagInfo, content) {
     inline,
   };
 
-  console.log('state', state)
+  const attrs = [
+    ['class', 'snapblocks-blocks'],
+    ['data-snapblocks-source', state.md.utils.escapeHtml(content)]
+  ]
 
-  let token = state.push('bbcode_open', 'pre', 1)
-  token.attrs = [
-    ['class', 'snapblocks-blocks']
-  ]
+  for (const [key, value] of Object.entries(options)) {
+    if (value != null) {
+      attrs.push(['data-' + key, String(value)])
+    }
+  }
+
+  let token = state.push('snapblocks_open', inline ? 'code' : 'pre', 1)
+  token.attrs = attrs
   token = state.push('text', '', 0)
-  // token.content = state.md.utils.escapeHtml(content);
   token.content = content
-  token = state.push('bbcode_close', 'pre', -1)
-  token.attrs = [
-    ['class', 'snapblocks-blocks']
-  ]
+  token = state.push('snapblocks_close', inline ? 'code' : 'pre', -1)
 
   return true
-  
-  // let token = state.push("html_raw", "", 0);
-  token.attrs = [
-    ["class", "snapblocks-blocks"],
-    ["data-blockStyle", options.blockStyle],
-  ];
-
-  // let html = `<${inline ? "span" : "pre"} class="snapblocks-blocks"`;
-  let html = `<${inline ? "span" : "div"} class="spoiled"`;
-
-  // for (const [key, value] of Object.entries(options)) {
-  //   if (value != null) {
-  //     html += ` ${key}="${value}"`;
-  //   }
-  // }
-
-  const escaped = state.md.utils.escapeHtml(content);
-  const source = escaped;
-  // html += ` snapblocks-source="${source}"`;
-  html += ">";
-
-  html += `${escaped}</${inline ? "span" : "div"}>`;
-
-  token.content = html;
-
-  console.log('rendered snapblocks', token.content)
-  return true;
 }
 
 export function setup(helper) {
   helper.allowList([
-    "span.snapblocks-source",
-    "span.snapblocks-blocks",
-    "span.snapblocks-blocks[blockStyle]",
-    "span.snapblocks-blocks[wrap]",
-    "span.snapblocks-blocks[wrapSize]",
-    "span.snapblocks-blocks[zebra]",
-    "span.snapblocks-blocks[showSpaces]",
-    "span.snapblocks-blocks[santa]",
-    "span.snapblocks-blocks[snapblocks-source]",
     "pre.snapblocks-blocks",
-    "pre.snapblocks-blocks[blockStyle]",
-    "pre.snapblocks-blocks[wrap]",
-    "pre.snapblocks-blocks[wrapSize]",
-    "pre.snapblocks-blocks[zebra]",
-    "pre.snapblocks-blocks[showSpaces]",
-    "pre.snapblocks-blocks[santa]",
-    "pre.snapblocks-blocks[snapblocks-source]",
-    "div.snapblocks-blocks",
-    "div.snapblocks-blocks[blockStyle]",
-    "div.snapblocks-blocks[wrap]",
-    "div.snapblocks-blocks[wrapSize]",
-    "div.snapblocks-blocks[zebra]",
-    "div.snapblocks-blocks[showSpaces]",
-    "div.snapblocks-blocks[santa]",
-    "div.snapblocks-blocks[snapblocks-source]",
+    "span.snapblocks-source",
+    "code.snapblocks-blocks",
+    "pre[data-*]",
+    "span[data-*]",
+    "code[data-*]",
   ]);
 
   let registerScratchblocks;

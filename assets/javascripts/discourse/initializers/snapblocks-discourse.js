@@ -8,7 +8,7 @@ import loadTranslations from "discourse/plugins/snapblocks-discourse/lib/snapblo
 import richEditorExtension from '../../lib/rich-editor-extension';
 
 function applySnapblocks(element, siteSettings) {
-  return
+  // return
   async function renderElement(el) {
     let style = el.getAttribute("blockStyle") || siteSettings.block_style;
     snapblocks.renderElement(el, {
@@ -27,10 +27,10 @@ function applySnapblocks(element, siteSettings) {
 
   element.querySelectorAll(".snapblocks-blocks").forEach((sb) => {
     renderElement(sb);
-    if (sb.getAttribute("snapblocks-source")) {
+    if (sb.getAttribute("data-snapblocks-source")) {
       sb.setAttribute(
-        "snapblocks-source",
-        sb.getAttribute("snapblocks-source").replaceAll("\n", "&NewLine;")
+        "data-snapblocks-source",
+        sb.getAttribute("data-snapblocks-source").replaceAll("\n", "&NewLine;")
       );
     }
   });
@@ -76,7 +76,7 @@ function initializeSnapblocks(api, siteSettings) {
       ];
       for (const attr of attrs) {
         if (attributes[attr]) {
-          prefix += ` ${attr}=${attributes[attr]}`;
+          prefix += ` ${attr}=${attributes['data-' + attr]}`;
         }
       }
 
@@ -84,13 +84,13 @@ function initializeSnapblocks(api, siteSettings) {
 
       this.prefix = prefix;
       this.suffix = "[/sb]";
-      return attributes["snapblocks-source"].replaceAll("&NewLine;", "\n");
+      return attributes["data-snapblocks-source"].replaceAll("&NewLine;", "\n");
     }
   });
   addBlockDecorateCallback(function () {
     const { attributes } = this.element;
 
-    if (attributes["snapblocks-source"]) {
+    if (attributes["data-snapblocks-source"]) {
       let prefix = "[snapblocks";
 
       const attrs = [
@@ -103,7 +103,7 @@ function initializeSnapblocks(api, siteSettings) {
       ];
       for (const attr of attrs) {
         if (attributes[attr]) {
-          prefix += ` ${attr}=${attributes[attr]}`;
+          prefix += ` ${attr}=${attributes['data-' + attr]}`;
         }
       }
 
@@ -111,7 +111,7 @@ function initializeSnapblocks(api, siteSettings) {
 
       this.prefix = prefix;
       this.suffix = "[/snapblocks]";
-      return `\n${attributes["snapblocks-source"].replaceAll(
+      return `\n${attributes["data-snapblocks-source"].replaceAll(
         "&NewLine;",
         "\n"
       )}\n`;

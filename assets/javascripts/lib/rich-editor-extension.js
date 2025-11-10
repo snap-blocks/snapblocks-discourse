@@ -2,70 +2,133 @@ import { i18n } from "discourse-i18n";
 
 const SNAPBLOCKS_NODES = ["inline_snapblocks", "snapblocks"];
 
+const ATTRIBUTES = [
+  'blockStyle',
+  'wrap',
+  'wrapSize',
+  'zebra',
+  'showSpaces',
+  'santa',
+]
+
 /** @type {RichEditorExtension} */
 const extension = {
   nodeSpec: {
     snapblocks: {
-      attrs: { rendered: { default: true } },
+      attrs: (() => {
+        const result = {
+          rendered: { default: true },
+        }
+        for (let attr of ATTRIBUTES) {
+          result[attr] = { default: null }
+        }
+        return result
+      })(),
       code: true,
       group: "block",
       content: "text*",
       createGapCursor: true,
-      parseDOM: [{ tag: "pre.snapblocks-blocks" }],
-      toDOM: () => ["pre", { class: "snapblocks-blocks" }, 0],
+      defining: true,
+      marks: "",
+      parseDOM: [{
+        tag: "pre.snapblocks-blocks",
+        preserveWhitespace: 'full',
+      }],
+      toDOM: (node) => {
+        const attrs = {
+          class: "snapblocks-blocks",
+          'data-inline': false,
+        }
+        for (let [attr, value] of Object.entries(node.attrs)) {
+          if (ATTRIBUTES.includes(attr) && value !== null) {
+            attrs[`data-${attr}`] = value
+          }
+        }
+        
+        return ["pre", attrs, 0]
+      },
     },
     inline_snapblocks: {
-      attrs: { rendered: { default: true } },
+      attrs: (() => {
+        const result = {
+          rendered: { default: true },
+        }
+        for (let attr of ATTRIBUTES) {
+          result[attr] = { default: null }
+        }
+        return result
+      })(),
+      code: true,
       group: "inline",
       inline: true,
-      content: "inline+",
-      parseDOM: [{ tag: "span.snapblocks-blocks" }],
-      toDOM: () => ["span", { class: "snapblocks-blocks" }, 0],
+      content: "text*",
+      // createGapCursor: true,
+      defining: true,
+      marks: "",
+      parseDOM: [{ tag: "code.snapblocks-blocks", preserveWhitespace: 'full' }],
+      toDOM: (node) => {
+        const attrs = {
+          class: "snapblocks-blocks",
+          'data-inline': true,
+        }
+        for (let [attr, value] of Object.entries(node.attrs)) {
+          if (ATTRIBUTES.includes(attr) && value !== null) {
+            attrs[`data-${attr}`] = value
+          }
+        }
+
+        console.log('rendered attrs', attrs)
+        
+        return ["code", attrs, 0]
+      },
     },
   },
   parse: {
-    // snapblocks_open(state, token) {
-    //   return state.openNode(state.schema.nodes.snapblocks)
-    // },
-    // snapblocks_close(state, token) {
-    //   return state.closeNode()
-    // },
-    // bbcode_snapblocks: { block: 'snapblocks' },
-    // bbcode(state, token) {
-    //   console.log('snapblocks', state, token)
-    //   if (token.nesting === 1 && token.attrGet("class") === "snapblocks-blocks") {
-    //     state.openNode(state.schema.nodes.snapblocks);
-    //     return true;
-    //   } else if (token.nesting === -1 && state.top().type.name === "snapblocks-blocks") {
-    //     state.closeNode();
-    //     return true;
-    //   }
-    // },
-    bbcode_open(state, token) {
-      console.log('snapblocks open', token)
+    snapblocks_open(state, token) {
+      // console.log('snapblocks open', token)
       if (token.attrGet('class') === 'snapblocks-blocks') {
-        state.openNode(state.schema.nodes.snapblocks, {
-          open: token.attrGet("open") !== null,
-        });
+        const attrs = {}
+        for (let attr of ATTRIBUTES) {
+          attrs[attr] = token.attrGet(`data-${attr}`)
+        }
+
+        // console.log('parsed-attrs', token.attrs, attrs)
+        
+        state.openNode(
+          token.attrGet('data-inline') === 'true'
+          ? state.schema.nodes.inline_snapblocks
+          : state.schema.nodes.snapblocks,
+          attrs,
+        );
         return true;
       }
     },
-    bbcode_close(state, token) {
-      console.log('snapblocks close', token)
-      if (token.attrGet('class') === 'snapblocks-blocks') {
+    snapblocks_close(state, token) {
+      // console.log('snapblocks close', token)
+      if (token.nesting === -1 && SNAPBLOCKS_NODES.includes(state.top().type.name)) {
         state.closeNode();
         return true;
       }
-    }
+    },
   },
   serializeNode: {
     snapblocks(state, node) {
-      state.write("[snapblocks]\n");
+      const attrs = Object.entries(node.attrs)
+        .map(([key, value]) => (value && ATTRIBUTES.includes(key) ? ` ${key}="${value}"` : ""))
+        .join("");
+      
+      // console.log('serialized attrs', node.attrs, attrs)
+
+      state.write(`[snapblocks${attrs}]\n`);
       state.renderContent(node);
       state.write("\n[/snapblocks]\n\n");
     },
     inline_snapblocks(state, node) {
-      state.write("[sb]");
+      const attrs = Object.entries(node.attrs)
+        .map(([key, value]) => (value && ATTRIBUTES.includes(key) ? ` ${key}="${value}"` : ""))
+        .join("");
+      
+      state.write(`[sb${attrs}]`);
       state.renderInline(node);
       state.write("[/sb]");
     },
@@ -148,7 +211,7 @@ const extension = {
           const snapblocksNode = isBlockSnapblocks
             ? schema.nodes.snapblocks.createAndFill(
                 null,
-                schema.nodes.paragraph.createAndFill(null, textNode)
+                textNode,
               )
             : schema.nodes.inline_snapblocks.createAndFill(null, textNode);
 
@@ -173,7 +236,7 @@ const extension = {
           $from.parent.isBlock &&
           $from.depth > 0;
         if (isBlockNodeSelection) {
-          return pmCommands.wrapIn(schema.nodes.spoiler)(state, dispatch);
+          return pmCommands.wrapIn(schema.nodes.snapblocks)(state, dispatch);
         }
 
         const slice = selection.content();
@@ -224,7 +287,6 @@ const extension = {
       },
       state: {
         init(config, state) {
-          // Initially blur all spoilers
           const decorations = [];
 
           state.doc.descendants((node, pos) => {

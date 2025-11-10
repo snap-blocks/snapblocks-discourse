@@ -21,3 +21,18 @@ code.snapblocks-blocks:has(.snapblocks) {
     opacity: 0;
     height: 1px;
 }
+
+.ProseMirror pre.snapblocks-blocks {
+    display: block;
+    padding: 12px;
+    max-height: 500px;
+    background: var(--hljs-bg);
+    border-radius: var(--d-border-radius);
+}
+
+.ProseMirror code.snapblocks-blocks {
+    padding: 2px 4px;
+    background: var(--inline-code-bg);
+    white-space: pre-wrap;
+    color: var(--primary);
+}
